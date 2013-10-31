@@ -1,0 +1,33 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="QM.Reporting.ODataDashboard.Web.Views.Shared.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head runat="server">
+
+    <title></title>
+
+    <link type="text/css" rel="stylesheet" href="<%: ResolveUrl("~/bootstrap/css/bootstrap.css") %>" /> 
+    <link type="text/css" rel="stylesheet" href="<%: ResolveUrl("~/bootstrap/css/normalize.css") %>" /> 
+
+    <asp:ContentPlaceHolder ID="HeadPlaceHolder" runat="server" />
+
+  </head>
+
+  <body>
+
+  <div class="container-fluid">
+
+    <asp:ContentPlaceHolder ID="BodyPlaceHolder" runat="server" />
+
+  </div>
+
+  <script type="text/javascript" src="<%: ResolveUrl("~/bootstrap/js/jquery.js") %>"></script>
+  <script type="text/javascript" src="<%: ResolveUrl("~/bootstrap/js/bootstrap.min.js") %>"></script>
+  
+  <asp:ContentPlaceHolder ID="ScriptPlaceHolder" runat="server" />
+
+</body>
+
+</html>

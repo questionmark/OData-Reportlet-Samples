@@ -1,0 +1,19 @@
+.sidebar {
+  padding-top: 80px;
+}
+
+.page-header {
+  padding-top: 40px; /* to offset the navbar locked to the top of the screen */
+}
+
+.tabbable .nav.nav-tabs {
+  margin-bottom: 0px;
+}
+
+.tabbable .tab-content {
+  padding: 20px 5px 20px 5px;
+  border-left: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px;
+}

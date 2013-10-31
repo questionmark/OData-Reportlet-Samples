@@ -1,0 +1,682 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+    <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="Participant">
+        <Key>
+          <PropertyRef Name="ParticipantKey" />
+        </Key>
+        <Property Name="ParticipantKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ParticipantName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="ParticipantFirstName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="ParticipantMiddleName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="ParticipantLastName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="ParticipantDetails" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="true" FixedLength="false" />
+        <Property Name="ParticipantRegisteredDate" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <Property Name="GroupGroupKey" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Results" Relationship="Model.ParticipantResult" FromRole="Participant" ToRole="Result" />
+        <NavigationProperty Name="TopicScores" Relationship="Model.ParticipantTopicScore" FromRole="Participant" ToRole="TopicScore" />
+      </EntityType>
+      <EntityType Name="Topic">
+        <Key>
+          <PropertyRef Name="TopicKey" />
+        </Key>
+        <Property Name="TopicKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionTopicId" Type="Edm.Int32" Nullable="true" />
+        <Property Name="TopicName" Type="Edm.String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="TopicDescription" Type="Edm.String" Nullable="false" MaxLength="1056" Unicode="true" FixedLength="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <Property Name="TopicPath" Type="Edm.String" Nullable="false" MaxLength="2048" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="TopicScores" Relationship="Model.TopicTopicScore" FromRole="Topic" ToRole="TopicScore" />
+        <NavigationProperty Name="Answers" Relationship="Model.TopicAnswer" FromRole="Topic" ToRole="Answer" />
+      </EntityType>
+      <EntityType Name="JTADimension">
+        <Key>
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="JTADimensionKey" />
+        </Key>
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTADimensionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DimensionNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTADimensionName" Type="Edm.String" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionJTADimension" FromRole="JTADimension" ToRole="Question" />
+        <NavigationProperty Name="Points" Relationship="Model.JTADimensionJTAPoint" FromRole="JTADimension" ToRole="JTAPoint" />
+      </EntityType>
+      <EntityType Name="JTAPoint">
+        <Key>
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="JTADimensionKey" />
+          <PropertyRef Name="JTAPointKey" />
+        </Key>
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTADimensionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTAPointKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PointNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTAPointText" Type="Edm.String" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionJTAPoint" FromRole="JTAPoint" ToRole="Question" />
+        <NavigationProperty Name="JTADimension" Relationship="Model.JTADimensionJTAPoint" FromRole="JTAPoint" ToRole="JTADimension" />
+      </EntityType>
+      <EntityType Name="JTAAnswer">
+        <Key>
+          <PropertyRef Name="ParticipantKey" />
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="JTADimensionKey" />
+          <PropertyRef Name="JTAPointKey" />
+        </Key>
+        <Property Name="ParticipantKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTADimensionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="JTAPointKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Participant" Relationship="Model.ParticipantJTAAnswer" FromRole="JTAAnswer" ToRole="Participant" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionJTAAnswer" FromRole="JTAAnswer" ToRole="Question" />
+        <NavigationProperty Name="JTADimension" Relationship="Model.JTADimensionJTAAnswer" FromRole="JTAAnswer" ToRole="JTADimension" />
+        <NavigationProperty Name="JTAPoint" Relationship="Model.JTAPointJTAAnswer" FromRole="JTAAnswer" ToRole="JTAPoint" />
+      </EntityType>
+      <EntityType Name="TopicScore">
+        <Key>
+          <PropertyRef Name="TopicKey" />
+          <PropertyRef Name="AssessmentKey" />
+          <PropertyRef Name="ParticipantKey" />
+          <PropertyRef Name="AssessmentAttemptNumber" />
+          <PropertyRef Name="DataSourceKey" />
+        </Key>
+        <Property Name="AssessmentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AssessmentAttemptNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ParticipantKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DataSourceKey" Type="Edm.Int16" Nullable="false" />
+        <Property Name="Score" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TopicMaximumScore" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TopicPercentageScore" Type="Edm.Double" Nullable="false" />
+        <Property Name="TopicQuestionCount" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TopicKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <Property Name="GroupGroupKey" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Topic" Relationship="Model.TopicTopicScore" FromRole="TopicScore" ToRole="Topic" />
+        <NavigationProperty Name="Participant" Relationship="Model.ParticipantTopicScore" FromRole="TopicScore" ToRole="Participant" />
+        <NavigationProperty Name="Assessment" Relationship="Model.AssessmentTopicScore" FromRole="TopicScore" ToRole="Assessment" />
+      </EntityType>
+      <EntityType Name="Result">
+        <Key>
+          <PropertyRef Name="PerceptionResultId" />
+        </Key>
+        <Property Name="DataSourceKey" Type="Edm.Int16" Nullable="false" />
+        <Property Name="AssessmentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ParticipantKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AssessmentAttemptNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionResultId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ResultTotalScore" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ResultPercentageScore" Type="Edm.Double" Nullable="false" />
+        <Property Name="ResultResponseTimeSeconds" Type="Edm.Int32" Nullable="false" />
+        <Property Name="GroupGroupKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AssessmentName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="ResultStatus" Type="Edm.String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="false" />
+        <Property Name="ScorebandName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="ScorebandUpperLimit" Type="Edm.Double" Nullable="false" />
+        <Property Name="ScorebandLowerLimit" Type="Edm.Double" Nullable="false" />
+        <Property Name="ResultStartUtc" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ResultFinishedUtc" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="ResultStartLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ResultFinishedLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="SpecialField1" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField2" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField3" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField4" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField5" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField6" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField7" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField8" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField9" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="SpecialField10" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="FolderPath" Type="Edm.String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Group" Relationship="Model.GroupResult" FromRole="Result" ToRole="Group" />
+        <NavigationProperty Name="Participant" Relationship="Model.ParticipantResult" FromRole="Result" ToRole="Participant" />
+        <NavigationProperty Name="Assessment" Relationship="Model.AssessmentResult" FromRole="Result" ToRole="Assessment" />
+        <NavigationProperty Name="Answers" Relationship="Model.ResultAnswer" FromRole="Result" ToRole="Answer" />
+      </EntityType>
+      <EntityType Name="Group">
+        <Key>
+          <PropertyRef Name="GroupGroupKey" />
+        </Key>
+        <Property Name="GroupGroupKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="GroupPath" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="GroupName" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <NavigationProperty Name="Results" Relationship="Model.GroupResult" FromRole="Group" ToRole="Result" />
+      </EntityType>
+      <EntityType Name="Question">
+        <Key>
+          <PropertyRef Name="QuestionKey" />
+        </Key>
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionQuestionMID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="PerceptionQuestionLID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="RevisionNumber" Type="Edm.Int32" Nullable="true" />
+        <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+        <Property Name="Wording" Type="Edm.String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="800" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="MinimumScore" Type="Edm.Int16" Nullable="false" />
+        <Property Name="MaximumScore" Type="Edm.Int16" Nullable="false" />
+        <Property Name="CorrectAnswers" Type="Edm.String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="ParentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDateUtc" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="CreatedDateLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ModifiedDateUtc" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="ModifiedDateLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="Author" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="LastEditedBy" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="QuestionStatus" Type="Edm.String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Outcomes" Relationship="Model.QuestionOutcome" FromRole="Question" ToRole="Outcome" />
+        <NavigationProperty Name="Choices" Relationship="Model.QuestionChoice" FromRole="Question" ToRole="Choice" />
+        <NavigationProperty Name="AssessmentQuestionLinks" Relationship="Model.QuestionAssessmentQuestionLink" FromRole="Question" ToRole="AssessmentQuestionLink" />
+        <NavigationProperty Name="Dimensions" Relationship="Model.QuestionJTADimension" FromRole="Question" ToRole="JTADimension" />
+      </EntityType>
+      <EntityType Name="AssessmentQuestionLink">
+        <Key>
+          <PropertyRef Name="AssessmentKey" />
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="DataSourceKey" />
+        </Key>
+        <Property Name="AssessmentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DataSourceKey" Type="Edm.Int16" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <NavigationProperty Name="Assessment" Relationship="Model.AssessmentAssessmentQuestionLink" FromRole="AssessmentQuestionLink" ToRole="Assessment" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionAssessmentQuestionLink" FromRole="AssessmentQuestionLink" ToRole="Question" />
+      </EntityType>
+      <EntityType Name="Choice">
+        <Key>
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="ChoiceKey" />
+        </Key>
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ChoiceKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ChoiceNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ChoiceText" Type="Edm.String" Nullable="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionChoice" FromRole="Choice" ToRole="Question" />
+      </EntityType>
+      <EntityType Name="Outcome">
+        <Key>
+          <PropertyRef Name="OutcomeKey" />
+        </Key>
+        <Property Name="OutcomeKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="true" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="Feedback" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <Property Name="Number" Type="Edm.Int32" Nullable="true" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionOutcome" FromRole="Outcome" ToRole="Question" />
+      </EntityType>
+      <EntityType Name="Assessment">
+        <Key>
+          <PropertyRef Name="AssessmentKey" />
+        </Key>
+        <Property Name="AssessmentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionAssessmentMID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionAssessmentLID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="RevisionNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" m:FC_TargetPath="SyndicationTitle" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="1020" Unicode="true" FixedLength="false" />
+        <Property Name="AssessmentType" Type="Edm.String" Nullable="false" MaxLength="25" Unicode="true" FixedLength="false" />
+        <Property Name="Author" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="LastEditedBy" Type="Edm.String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        <Property Name="AssessmentRandomlyAdministered" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="AssessmentHasTimeLimit" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="AssessmentTimeLimit" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CreatedDateUtc" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="CreatedDateLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ModifiedDateUtc" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="true" />
+        <Property Name="ModifiedDateLocal" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" Unicode="true" FixedLength="false" />
+        <Property Name="Language" Type="Edm.String" Nullable="false" MaxLength="64" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="AssessmentQuestionLinks" Relationship="Model.AssessmentAssessmentQuestionLink" FromRole="Assessment" ToRole="AssessmentQuestionLink" />
+        <NavigationProperty Name="TopicScores" Relationship="Model.AssessmentTopicScore" FromRole="Assessment" ToRole="TopicScore" />
+        <NavigationProperty Name="Answers" Relationship="Model.AssessmentAnswer" FromRole="Assessment" ToRole="Answer" />
+        <NavigationProperty Name="Results" Relationship="Model.AssessmentResult" FromRole="Assessment" ToRole="Result" />
+      </EntityType>
+      <EntityType Name="Answer">
+        <Key>
+          <PropertyRef Name="ParticipantKey" />
+          <PropertyRef Name="AssessmentKey" />
+          <PropertyRef Name="AssessmentAttemptNumber" />
+          <PropertyRef Name="QuestionKey" />
+          <PropertyRef Name="TopicKey" />
+          <PropertyRef Name="AnswerOccurrence" />
+          <PropertyRef Name="AnswerPresentedQuestionNumber" />
+          <PropertyRef Name="QuestionPartNumber" />
+          <PropertyRef Name="DataSourceKey" />
+        </Key>
+        <Property Name="DataSourceKey" Type="Edm.Int16" Nullable="false" />
+        <Property Name="AssessmentKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ParticipantKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AssessmentAttemptNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TopicKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AnswerOccurrence" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AnswerScore" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AnswerStatus" Type="Edm.String" Nullable="false" MaxLength="25" />
+        <Property Name="AnswerPresentedQuestionNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionPartNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="QuestionNumber" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AnswerResponseTimeSeconds" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AnswerGiven" Type="Edm.String" Nullable="false" />
+        <Property Name="CommentGiven" Type="Edm.String" Nullable="false" />
+        <Property Name="TenantId" Type="Edm.String" Nullable="false" MaxLength="63" />
+        <Property Name="BatchFinishedUTC" Type="Edm.DateTime" Nullable="true" m:FC_TargetPath="SyndicationUpdated" m:FC_ContentKind="text" m:FC_KeepInContent="false" />
+        <Property Name="GroupGroupKey" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PerceptionResultId" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Assessment" Relationship="Model.AssessmentAnswer" FromRole="Answer" ToRole="Assessment" />
+        <NavigationProperty Name="Participant" Relationship="Model.ParticipantAnswer" FromRole="Answer" ToRole="Participant" />
+        <NavigationProperty Name="Result" Relationship="Model.ResultAnswer" FromRole="Answer" ToRole="Result" />
+        <NavigationProperty Name="Question" Relationship="Model.QuestionAnswer" FromRole="Answer" ToRole="Question" />
+        <NavigationProperty Name="Topic" Relationship="Model.TopicAnswer" FromRole="Answer" ToRole="Topic" />
+      </EntityType>
+      <Association Name="QuestionJTADimension">
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <End Role="JTADimension" Type="Model.JTADimension" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="JTADimension">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="JTADimensionJTAPoint">
+        <End Role="JTADimension" Type="Model.JTADimension" Multiplicity="1" />
+        <End Role="JTAPoint" Type="Model.JTAPoint" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="JTADimension">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+          </Principal>
+          <Dependent Role="JTAPoint">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionJTAPoint">
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <End Role="JTAPoint" Type="Model.JTAPoint" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="JTAPoint">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ParticipantJTAAnswer">
+        <End Role="JTAAnswer" Type="Model.JTAAnswer" Multiplicity="*" />
+        <End Role="Participant" Type="Model.Participant" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Participant">
+            <PropertyRef Name="ParticipantKey" />
+          </Principal>
+          <Dependent Role="JTAAnswer">
+            <PropertyRef Name="ParticipantKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionJTAAnswer">
+        <End Role="JTAAnswer" Type="Model.JTAAnswer" Multiplicity="*" />
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="JTAAnswer">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="JTADimensionJTAAnswer">
+        <End Role="JTAAnswer" Type="Model.JTAAnswer" Multiplicity="*" />
+        <End Role="JTADimension" Type="Model.JTADimension" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="JTADimension">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+          </Principal>
+          <Dependent Role="JTAAnswer">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="JTAPointJTAAnswer">
+        <End Role="JTAAnswer" Type="Model.JTAAnswer" Multiplicity="*" />
+        <End Role="JTAPoint" Type="Model.JTAPoint" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="JTAPoint">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+            <PropertyRef Name="JTAPointKey" />
+          </Principal>
+          <Dependent Role="JTAAnswer">
+            <PropertyRef Name="QuestionKey" />
+            <PropertyRef Name="JTADimensionKey" />
+            <PropertyRef Name="JTAPointKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="TopicTopicScore">
+        <End Role="TopicScore" Type="Model.TopicScore" Multiplicity="*" />
+        <End Role="Topic" Type="Model.Topic" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Topic">
+            <PropertyRef Name="TopicKey" />
+          </Principal>
+          <Dependent Role="TopicScore">
+            <PropertyRef Name="TopicKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ParticipantTopicScore">
+        <End Role="TopicScore" Type="Model.TopicScore" Multiplicity="*" />
+        <End Role="Participant" Type="Model.Participant" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Participant">
+            <PropertyRef Name="ParticipantKey" />
+          </Principal>
+          <Dependent Role="TopicScore">
+            <PropertyRef Name="ParticipantKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="AssessmentTopicScore">
+        <End Role="TopicScore" Type="Model.TopicScore" Multiplicity="*" />
+        <End Role="Assessment" Type="Model.Assessment" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Assessment">
+            <PropertyRef Name="AssessmentKey" />
+          </Principal>
+          <Dependent Role="TopicScore">
+            <PropertyRef Name="AssessmentKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="TopicAnswer">
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <End Role="Topic" Type="Model.Topic" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Topic">
+            <PropertyRef Name="TopicKey" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="TopicKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="AssessmentResult">
+        <End Role="Result" Type="Model.Result" Multiplicity="*" />
+        <End Role="Assessment" Type="Model.Assessment" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Assessment">
+            <PropertyRef Name="AssessmentKey" />
+          </Principal>
+          <Dependent Role="Result">
+            <PropertyRef Name="AssessmentKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ParticipantResult">
+        <End Role="Result" Type="Model.Result" Multiplicity="*" />
+        <End Role="Participant" Type="Model.Participant" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Participant">
+            <PropertyRef Name="ParticipantKey" />
+          </Principal>
+          <Dependent Role="Result">
+            <PropertyRef Name="ParticipantKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="GroupResult">
+        <End Role="Group" Type="Model.Group" Multiplicity="1" />
+        <End Role="Result" Type="Model.Result" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Group">
+            <PropertyRef Name="GroupGroupKey" />
+          </Principal>
+          <Dependent Role="Result">
+            <PropertyRef Name="GroupGroupKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionOutcome">
+        <End Role="Question" Type="Model.Question" Multiplicity="0..1" />
+        <End Role="Outcome" Type="Model.Outcome" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="Outcome">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionChoice">
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <End Role="Choice" Type="Model.Choice" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="Choice">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="AssessmentAssessmentQuestionLink">
+        <End Role="Assessment" Type="Model.Assessment" Multiplicity="1" />
+        <End Role="AssessmentQuestionLink" Type="Model.AssessmentQuestionLink" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Assessment">
+            <PropertyRef Name="AssessmentKey" />
+          </Principal>
+          <Dependent Role="AssessmentQuestionLink">
+            <PropertyRef Name="AssessmentKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionAssessmentQuestionLink">
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <End Role="AssessmentQuestionLink" Type="Model.AssessmentQuestionLink" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="AssessmentQuestionLink">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="AssessmentAnswer">
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <End Role="Assessment" Type="Model.Assessment" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Assessment">
+            <PropertyRef Name="AssessmentKey" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="AssessmentKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ParticipantAnswer">
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <End Role="Participant" Type="Model.Participant" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Participant">
+            <PropertyRef Name="ParticipantKey" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="ParticipantKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="ResultAnswer">
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <End Role="Result" Type="Model.Result" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Result">
+            <PropertyRef Name="PerceptionResultId" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="PerceptionResultId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="AnswerResult">
+        <End Role="Result" Type="Model.Result" Multiplicity="1" />
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Result">
+            <PropertyRef Name="PerceptionResultId" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="PerceptionResultId" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="QuestionAnswer">
+        <End Role="Answer" Type="Model.Answer" Multiplicity="*" />
+        <End Role="Question" Type="Model.Question" Multiplicity="1" />
+        <ReferentialConstraint>
+          <Principal Role="Question">
+            <PropertyRef Name="QuestionKey" />
+          </Principal>
+          <Dependent Role="Answer">
+            <PropertyRef Name="QuestionKey" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+    </Schema>
+    <Schema Namespace="QM.Reporting.Services.OData.SqlServer" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="Entities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="Participants" EntityType="Model.Participant" />
+        <EntitySet Name="Topics" EntityType="Model.Topic" />
+        <EntitySet Name="JTADimensions" EntityType="Model.JTADimension" />
+        <EntitySet Name="JTAPoints" EntityType="Model.JTAPoint" />
+        <EntitySet Name="JTAAnswers" EntityType="Model.JTAAnswer" />
+        <EntitySet Name="TopicScores" EntityType="Model.TopicScore" />
+        <EntitySet Name="Results" EntityType="Model.Result" />
+        <EntitySet Name="Groups" EntityType="Model.Group" />
+        <EntitySet Name="Questions" EntityType="Model.Question" />
+        <EntitySet Name="AssessmentQuestionLinks" EntityType="Model.AssessmentQuestionLink" />
+        <EntitySet Name="Choices" EntityType="Model.Choice" />
+        <EntitySet Name="Outcomes" EntityType="Model.Outcome" />
+        <EntitySet Name="Assessments" EntityType="Model.Assessment" />
+        <EntitySet Name="Answers" EntityType="Model.Answer" />
+        <AssociationSet Name="QuestionJTADimension" Association="Model.QuestionJTADimension">
+          <End Role="Question" EntitySet="Questions" />
+          <End Role="JTADimension" EntitySet="JTADimensions" />
+        </AssociationSet>
+        <AssociationSet Name="JTADimensionJTAPoint" Association="Model.JTADimensionJTAPoint">
+          <End Role="JTADimension" EntitySet="JTADimensions" />
+          <End Role="JTAPoint" EntitySet="JTAPoints" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionJTAPoint" Association="Model.QuestionJTAPoint">
+          <End Role="Question" EntitySet="Questions" />
+          <End Role="JTAPoint" EntitySet="JTAPoints" />
+        </AssociationSet>
+        <AssociationSet Name="ParticipantJTAAnswer" Association="Model.ParticipantJTAAnswer">
+          <End Role="JTAAnswer" EntitySet="JTAAnswers" />
+          <End Role="Participant" EntitySet="Participants" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionJTAAnswer" Association="Model.QuestionJTAAnswer">
+          <End Role="JTAAnswer" EntitySet="JTAAnswers" />
+          <End Role="Question" EntitySet="Questions" />
+        </AssociationSet>
+        <AssociationSet Name="JTADimensionJTAAnswer" Association="Model.JTADimensionJTAAnswer">
+          <End Role="JTAAnswer" EntitySet="JTAAnswers" />
+          <End Role="JTADimension" EntitySet="JTADimensions" />
+        </AssociationSet>
+        <AssociationSet Name="JTAPointJTAAnswer" Association="Model.JTAPointJTAAnswer">
+          <End Role="JTAAnswer" EntitySet="JTAAnswers" />
+          <End Role="JTAPoint" EntitySet="JTAPoints" />
+        </AssociationSet>
+        <AssociationSet Name="TopicTopicScore" Association="Model.TopicTopicScore">
+          <End Role="TopicScore" EntitySet="TopicScores" />
+          <End Role="Topic" EntitySet="Topics" />
+        </AssociationSet>
+        <AssociationSet Name="ParticipantTopicScore" Association="Model.ParticipantTopicScore">
+          <End Role="TopicScore" EntitySet="TopicScores" />
+          <End Role="Participant" EntitySet="Participants" />
+        </AssociationSet>
+        <AssociationSet Name="AssessmentTopicScore" Association="Model.AssessmentTopicScore">
+          <End Role="TopicScore" EntitySet="TopicScores" />
+          <End Role="Assessment" EntitySet="Assessments" />
+        </AssociationSet>
+        <AssociationSet Name="TopicAnswer" Association="Model.TopicAnswer">
+          <End Role="Answer" EntitySet="Answers" />
+          <End Role="Topic" EntitySet="Topics" />
+        </AssociationSet>
+        <AssociationSet Name="AssessmentResult" Association="Model.AssessmentResult">
+          <End Role="Result" EntitySet="Results" />
+          <End Role="Assessment" EntitySet="Assessments" />
+        </AssociationSet>
+        <AssociationSet Name="ParticipantResult" Association="Model.ParticipantResult">
+          <End Role="Result" EntitySet="Results" />
+          <End Role="Participant" EntitySet="Participants" />
+        </AssociationSet>
+        <AssociationSet Name="GroupResult" Association="Model.GroupResult">
+          <End Role="Group" EntitySet="Groups" />
+          <End Role="Result" EntitySet="Results" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionOutcome" Association="Model.QuestionOutcome">
+          <End Role="Question" EntitySet="Questions" />
+          <End Role="Outcome" EntitySet="Outcomes" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionChoice" Association="Model.QuestionChoice">
+          <End Role="Question" EntitySet="Questions" />
+          <End Role="Choice" EntitySet="Choices" />
+        </AssociationSet>
+        <AssociationSet Name="AssessmentAssessmentQuestionLink" Association="Model.AssessmentAssessmentQuestionLink">
+          <End Role="Assessment" EntitySet="Assessments" />
+          <End Role="AssessmentQuestionLink" EntitySet="AssessmentQuestionLinks" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionAssessmentQuestionLink" Association="Model.QuestionAssessmentQuestionLink">
+          <End Role="Question" EntitySet="Questions" />
+          <End Role="AssessmentQuestionLink" EntitySet="AssessmentQuestionLinks" />
+        </AssociationSet>
+        <AssociationSet Name="AssessmentAnswer" Association="Model.AssessmentAnswer">
+          <End Role="Answer" EntitySet="Answers" />
+          <End Role="Assessment" EntitySet="Assessments" />
+        </AssociationSet>
+        <AssociationSet Name="ParticipantAnswer" Association="Model.ParticipantAnswer">
+          <End Role="Answer" EntitySet="Answers" />
+          <End Role="Participant" EntitySet="Participants" />
+        </AssociationSet>
+        <AssociationSet Name="ResultAnswer" Association="Model.ResultAnswer">
+          <End Role="Answer" EntitySet="Answers" />
+          <End Role="Result" EntitySet="Results" />
+        </AssociationSet>
+        <AssociationSet Name="AnswerResult" Association="Model.AnswerResult">
+          <End Role="Result" EntitySet="Results" />
+          <End Role="Answer" EntitySet="Answers" />
+        </AssociationSet>
+        <AssociationSet Name="QuestionAnswer" Association="Model.QuestionAnswer">
+          <End Role="Answer" EntitySet="Answers" />
+          <End Role="Question" EntitySet="Questions" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
