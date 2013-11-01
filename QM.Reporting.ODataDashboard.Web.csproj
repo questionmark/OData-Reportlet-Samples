@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReportletController.cs" />
     <Compile Include="DataAccess\AssessmentsDAL.cs" />
     <Compile Include="DataAccess\ResultsDAL.cs" />
@@ -145,6 +146,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Views\Account\Login.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Reportlet\AttemptDistribution.aspx" />
     <Content Include="Views\Reportlet\PreTestPostTest.aspx" />
     <Content Include="Views\Reportlet\ScoreCorrelation.aspx" />

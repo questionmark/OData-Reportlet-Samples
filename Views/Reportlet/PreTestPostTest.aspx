@@ -200,7 +200,7 @@
 
             ajaxCall = $.ajax({
               type: 'GET',
-              url: '../PreTestPostTestData/',
+              url: '/Reportlet/PreTestPostTestData/',
               data: dataToSend,
               datatype: 'json',
 
