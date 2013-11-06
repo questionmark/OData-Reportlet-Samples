@@ -448,7 +448,11 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
             var resultsForFirstAssessment = ResultsDAL.GetResultsForAssessment(accountModel, firstSelectedAssessment).ToList();
             var resultsForSecondAssessment = ResultsDAL.GetResultsForAssessment(accountModel, secondSelectedAssessment).ToList();
 
-            var chartData = GetScoreCorrelationChartData(resultsForFirstAssessment, resultsForSecondAssessment);
+            // only look at the first attempts for each result to ensure a valid comparison
+            var resultsForFirstAssessmentFirstAttempt = GetOnlyFirstAttempts(resultsForFirstAssessment);
+            var resultsForSecondAssessmentFirstAttempt = GetOnlyFirstAttempts(resultsForSecondAssessment);
+
+            var chartData = GetScoreCorrelationChartData(resultsForFirstAssessmentFirstAttempt, resultsForSecondAssessmentFirstAttempt);
 
             var jsonData = string.Format(@"
                 {{
@@ -457,6 +461,13 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
                 chartData);
 
             return jsonData;
+        }
+
+        private static List<Result> GetOnlyFirstAttempts(List<Result> results)
+        {
+            var resultsForFirstAttempts = results.Where(r => r.AssessmentAttemptNumber == 1).ToList();
+
+            return resultsForFirstAttempts;
         }
 
         private static string GetScoreCorrelationChartData(List<Result> resultsForFirstAssessment, List<Result> resultsForSecondAssessment)

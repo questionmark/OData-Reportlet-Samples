@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using QM.Reporting.ODataDashboard.Web.App_Start;
@@ -27,6 +29,12 @@ namespace QM.Reporting.ODataDashboard.Web
                 "{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = "" }
                 );
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            HttpContext.Current.Response.AddHeader("x-frame-options", "");
+            HttpContext.Current.Response.AddHeader("p3p", "CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
         }
     }
 }
