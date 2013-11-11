@@ -49,7 +49,7 @@
 
     <div class="row-fluid">
     
-      <div id="chart_div" class="span12" style="height: 500px;"></div>
+      <div id="chart_div" class="span12" style="height: 440px;"></div>
 
     </div>
 
@@ -117,22 +117,47 @@
 
         var options = {
           hAxis: {
-            format: '###',
             minValue: 0,
-            maxValue:100,
+            maxValue: 100,
             slantedText: true,
-            ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            slantedTextAngle: 45,
+            ticks: [
+              { v: 0, f: "0%" },
+              { v: 10, f: "10%" },
+              { v: 20, f: "20%" },
+              { v: 30, f: "30%" },
+              { v: 40, f: "40%" },
+              { v: 50, f: "50%" },
+              { v: 60, f: "60%" },
+              { v: 70, f: "70%" },
+              { v: 80, f: "80%" },
+              { v: 90, f: "90%" },
+              { v: 100, f: "100%" }
+            ],
             title: firstSelectedAssessmentName
           },
+          height: 418,
+          width: 418,
           legend: {
             position: 'none'
           },
           title: 'Score Correlation between ' + firstSelectedAssessmentName + ' and ' + secondSelectedAssessmentName,
           vAxis: {
-            format: '###',
             minValue: 0,
             maxValue: 100,
-            ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            ticks: [
+              { v: 0, f: "0%" },
+              { v: 10, f: "10%" },
+              { v: 20, f: "20%" },
+              { v: 30, f: "30%" },
+              { v: 40, f: "40%" },
+              { v: 50, f: "50%" },
+              { v: 60, f: "60%" },
+              { v: 70, f: "70%" },
+              { v: 80, f: "80%" },
+              { v: 90, f: "90%" },
+              { v: 100, f: "100%" }
+            ],
             title: secondSelectedAssessmentName
           }
         };
