@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -31,10 +32,9 @@ namespace QM.Reporting.ODataDashboard.Web
                 );
         }
 
-        protected void Application_BeginRequest(object sender, EventArgs e)
+        protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
         {
-            HttpContext.Current.Response.AddHeader("x-frame-options", "");
-            HttpContext.Current.Response.AddHeader("p3p", "CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\"");
+            HttpContext.Current.Response.Headers.Remove("X-Frame-Options");
         }
     }
 }

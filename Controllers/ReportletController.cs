@@ -300,7 +300,54 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
                     ? string.Format("{0:F1}%", medianScoreOfFilteredResultsForSecondAssessment)
                     : "-";
 
-            var chartData = GetPreTestPostTestChartData(filteredResultsForFirstAssessment, filteredResultsForSecondAssessment);
+            var quartileScoresForFirstAssessment = GetQuartileScores(filteredResultsForFirstAssessment);
+            var quartileScoresForSecondAssessment = GetQuartileScores(filteredResultsForSecondAssessment);
+
+            var q0ScoreForFirstAssessmentAsString =
+                !double.IsNaN(quartileScoresForFirstAssessment.Quartile0Score)
+                    ? string.Format("{0:F1}%", quartileScoresForFirstAssessment.Quartile0Score)
+                    : "-";
+            var q1ScoreForFirstAssessmentAsString =
+                !double.IsNaN(quartileScoresForFirstAssessment.Quartile1Score)
+                    ? string.Format("{0:F1}%", quartileScoresForFirstAssessment.Quartile1Score)
+                    : "-";
+            var q2ScoreForFirstAssessmentAsString = 
+                !double.IsNaN(quartileScoresForFirstAssessment.Quartile2Score)
+                    ? string.Format("{0:F1}%", quartileScoresForFirstAssessment.Quartile2Score)
+                    : "-";
+            var q3ScoreForFirstAssessmentAsString = 
+                !double.IsNaN(quartileScoresForFirstAssessment.Quartile3Score)
+                    ? string.Format("{0:F1}%", quartileScoresForFirstAssessment.Quartile3Score)
+                    : "-";
+            var q4ScoreForFirstAssessmentAsString = 
+                !double.IsNaN(quartileScoresForFirstAssessment.Quartile4Score)
+                    ? string.Format("{0:F1}%", quartileScoresForFirstAssessment.Quartile4Score)
+                    : "-";
+            var q0ScoreForSecondAssessmentAsString = 
+                !double.IsNaN(quartileScoresForSecondAssessment.Quartile0Score)
+                    ? string.Format("{0:F1}%", quartileScoresForSecondAssessment.Quartile0Score)
+                    : "-";
+            var q1ScoreForSecondAssessmentAsString = 
+                !double.IsNaN(quartileScoresForSecondAssessment.Quartile1Score)
+                    ? string.Format("{0:F1}%", quartileScoresForSecondAssessment.Quartile1Score)
+                    : "-";
+            var q2ScoreForSecondAssessmentAsString = 
+                !double.IsNaN(quartileScoresForSecondAssessment.Quartile2Score)
+                    ? string.Format("{0:F1}%", quartileScoresForSecondAssessment.Quartile2Score)
+                    : "-";
+            var q3ScoreForSecondAssessmentAsString = 
+                !double.IsNaN(quartileScoresForSecondAssessment.Quartile3Score)
+                    ? string.Format("{0:F1}%", quartileScoresForSecondAssessment.Quartile3Score)
+                    : "-";
+            var q4ScoreForSecondAssessmentAsString = 
+                !double.IsNaN(quartileScoresForSecondAssessment.Quartile4Score)
+                    ? string.Format("{0:F1}%", quartileScoresForSecondAssessment.Quartile4Score)
+                    : "-";
+
+            var nameForFirstAssessment = resultsForFirstAssessment.Count > 0 ? resultsForFirstAssessment[0].AssessmentName : "-";
+            var nameForSecondAssessment = resultsForSecondAssessment.Count > 0 ? resultsForSecondAssessment[0].AssessmentName : "-";
+
+            var chartData = GetPreTestPostTestChartData(nameForFirstAssessment, quartileScoresForFirstAssessment, nameForSecondAssessment, quartileScoresForSecondAssessment);
 
             var jsonData = string.Format(@"
                 {{
@@ -309,23 +356,43 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
                     ""meanScoreOfFilteredResultsForFirstAssessment"":""{2}"",
                     ""standardDeviationOfFilteredResultsForFirstAssessment"":""{3}"",
                     ""medianScoreOfFilteredResultsForFirstAssessment"":""{4}"",
-                    ""countOfFilteredResultsForSecondAssessment"":{5},
-                    ""countOfIgnoredResultsForSecondAssessment"":{6},
-                    ""meanScoreOfFilteredResultsForSecondAssessment"":""{7}"",
-                    ""standardDeviationOfFilteredResultsForSecondAssessment"":""{8}"",
-                    ""medianScoreOfFilteredResultsForSecondAssessment"":""{9}"",
-                    ""chartData"":[{10}]
+                    ""quartile0ScoreForFirstAssessment"":""{5}"",
+                    ""quartile1ScoreForFirstAssessment"":""{6}"",
+                    ""quartile2ScoreForFirstAssessment"":""{7}"",
+                    ""quartile3ScoreForFirstAssessment"":""{8}"",
+                    ""quartile4ScoreForFirstAssessment"":""{9}"",
+                    ""countOfFilteredResultsForSecondAssessment"":{10},
+                    ""countOfIgnoredResultsForSecondAssessment"":{11},
+                    ""meanScoreOfFilteredResultsForSecondAssessment"":""{12}"",
+                    ""standardDeviationOfFilteredResultsForSecondAssessment"":""{13}"",
+                    ""medianScoreOfFilteredResultsForSecondAssessment"":""{14}"",
+                    ""quartile0ScoreForSecondAssessment"":""{15}"",
+                    ""quartile1ScoreForSecondAssessment"":""{16}"",
+                    ""quartile2ScoreForSecondAssessment"":""{17}"",
+                    ""quartile3ScoreForSecondAssessment"":""{18}"",
+                    ""quartile4ScoreForSecondAssessment"":""{19}"",
+                    ""chartData"":[{20}]
                 }}",
                 countOfFilteredResultsForFirstAssessment,
                 countOfIgnoredResultsForFirstAssessment,
                 meanScoreOfFilteredResultsForFirstAssessmentAsString,
                 standardDeviationOfFilteredResultsForFirstAssessmentAsString,
                 medianScoreOfFilteredResultsForFirstAssessmentAsString,
+                q0ScoreForFirstAssessmentAsString,
+                q1ScoreForFirstAssessmentAsString,
+                q2ScoreForFirstAssessmentAsString,
+                q3ScoreForFirstAssessmentAsString,
+                q4ScoreForFirstAssessmentAsString,
                 countOfFilteredResultsForSecondAssessment,
                 countOfIgnoredResultsForSecondAssessment,
                 meanScoreOfFilteredResultsForSecondAssessmentAsString,
                 standardDeviationOfFilteredResultsForSecondAssessmentAsString,
                 medianScoreOfFilteredResultsForSecondAssessmentAsString,
+                q0ScoreForSecondAssessmentAsString,
+                q1ScoreForSecondAssessmentAsString,
+                q2ScoreForSecondAssessmentAsString,
+                q3ScoreForSecondAssessmentAsString,
+                q4ScoreForSecondAssessmentAsString,
                 chartData);
 
             return jsonData;
@@ -378,44 +445,106 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
             return filteredResults;
         }
 
-        private static string GetPreTestPostTestChartData(List<Result> resultsForFirstAssessment, List<Result> resultsForSecondAssessment)
+        private static QuartileScores GetQuartileScores(List<Result> results)
+        {
+            var quartileScores = new QuartileScores();
+
+            if (results.Count > 0)
+            {
+                var orderedResults = results.OrderBy(r => r.ResultPercentageScore).ToList();
+
+                var lowRangeStart = 0;
+                var lowRangeEnd = orderedResults.Count / 2;
+                var highRangeStart = orderedResults.Count / 2;
+                var highRangeEnd = orderedResults.Count - 1;
+
+                if (orderedResults.Count % 2 == 0)
+                {
+                    // even number of results so slightly adjust the ranges
+                    lowRangeEnd -= 1;
+                }
+
+                var lowRange = new List<Result>();
+                for (int i = lowRangeStart; i <= lowRangeEnd; i++)
+                {
+                    lowRange.Add(orderedResults[i]);
+                }
+                var highRange = new List<Result>();
+                for (int i = highRangeStart; i <= highRangeEnd; i++)
+                {
+                    highRange.Add(orderedResults[i]);
+                }
+
+                quartileScores.Quartile0Score = orderedResults[lowRangeStart].ResultPercentageScore;
+                quartileScores.Quartile1Score = GetMedianScore(lowRange);
+                quartileScores.Quartile2Score = GetMedianScore(orderedResults);
+                quartileScores.Quartile3Score = GetMedianScore(highRange);
+                quartileScores.Quartile4Score = orderedResults[highRangeEnd].ResultPercentageScore;
+            }
+
+            return quartileScores;
+        }
+
+        private static string GetPreTestPostTestChartData(string nameForFirstAssessment, QuartileScores quartileScoresForFirstAssessment, string nameForSecondAssessment, QuartileScores quartileScoresForSecondAssessment)
         {
             var chartData = string.Empty;
 
-            chartData += GetPreTestPostTestChartData(resultsForFirstAssessment);
-            chartData += GetPreTestPostTestChartData(resultsForSecondAssessment);
+            chartData += GetPreTestPostTestChartData(nameForFirstAssessment, quartileScoresForFirstAssessment);
+            chartData += GetPreTestPostTestChartData(nameForSecondAssessment, quartileScoresForSecondAssessment);
 
             chartData = chartData.TrimEnd(',');
 
             return chartData;
         }
 
-        private static string GetPreTestPostTestChartData(List<Result> results)
+        private static string GetPreTestPostTestChartData(string assessmentName, QuartileScores quartileScores)
         {
-            var chartData = string.Empty;
+            var tooltip = string.Format(
+                "Quartile 4: {0}<br/>" +
+                "Quartile 3: {1}<br/>" +
+                "Quartile 2: {2}<br/>" +
+                "Quartile 1: {3}<br/>" +
+                "Quartile 0: {4}",
+                !double.IsNaN(quartileScores.Quartile4Score) ? string.Format("{0:F1}%", quartileScores.Quartile4Score) : "-",
+                !double.IsNaN(quartileScores.Quartile3Score) ? string.Format("{0:F1}%", quartileScores.Quartile3Score) : "-",
+                !double.IsNaN(quartileScores.Quartile2Score) ? string.Format("{0:F1}%", quartileScores.Quartile2Score) : "-",
+                !double.IsNaN(quartileScores.Quartile1Score) ? string.Format("{0:F1}%", quartileScores.Quartile1Score) : "-",
+                !double.IsNaN(quartileScores.Quartile0Score) ? string.Format("{0:F1}%", quartileScores.Quartile0Score) : "-"
+                );
 
-            if (results.Count > 0)
-            {
-                var min = results.Min(r => r.ResultPercentageScore);
-                var roundedMin = Math.Round(min, 1, MidpointRounding.AwayFromZero);
-                var max = results.Max(r => r.ResultPercentageScore);
-                var roundedMax = Math.Round(max, 1, MidpointRounding.AwayFromZero);
-                var spread = max - min;
-                var firstQuartileUpperLimit = min + ( spread * 0.25 );
-                var roundedFirstQuartileUpperLimit = Math.Round(firstQuartileUpperLimit, 1, MidpointRounding.AwayFromZero);
-                var fourthQuartileLowerLimit = min + ( spread * 0.75 );
-                var roundedFourthQuartileLowerLimit = Math.Round(fourthQuartileLowerLimit, 1, MidpointRounding.AwayFromZero);
-
-                chartData += string.Format(@"[""{0}"",{1},{2},{3},{4}],",
-                    results[0].AssessmentName,
-                    roundedMin,
-                    roundedFirstQuartileUpperLimit,
-                    roundedFourthQuartileLowerLimit,
-                    roundedMax
-                    );
-            }
+            var chartData = string.Format(@"[""{0}"",{1},{2},{3},{4},""{5}""],",
+                assessmentName,
+                !double.IsNaN(quartileScores.Quartile0Score) ? Math.Round(quartileScores.Quartile0Score, 1, MidpointRounding.AwayFromZero) : 0,
+                !double.IsNaN(quartileScores.Quartile1Score) ? Math.Round(quartileScores.Quartile1Score, 1, MidpointRounding.AwayFromZero) : 0,
+                !double.IsNaN(quartileScores.Quartile3Score) ? Math.Round(quartileScores.Quartile3Score, 1, MidpointRounding.AwayFromZero) : 0,
+                !double.IsNaN(quartileScores.Quartile4Score) ? Math.Round(quartileScores.Quartile4Score, 1, MidpointRounding.AwayFromZero) : 0,
+                tooltip
+                );
 
             return chartData;
+        }
+
+        private static double GetMedianScore(List<Result> results)
+        {
+            double medianScore;
+
+            if (results.Count % 2 == 0)
+            {
+                // even number of results, so average the middle two
+                var midPos1 = (results.Count / 2) - 1;
+                var midPos2 = results.Count / 2;
+                var midScore1 = results[midPos1].ResultPercentageScore;
+                var midScore2 = results[midPos2].ResultPercentageScore;
+                medianScore = ( midScore1 + midScore2 ) / 2;
+            }
+            else
+            {
+                // odd number of results, so pick the middle one
+                var midPos = results.Count / 2;
+                medianScore = results[midPos].ResultPercentageScore;
+            }
+
+            return medianScore;
         }
 
         #endregion
@@ -704,6 +833,25 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
             var roundedMedianPercentageScore = Math.Round(medianPercentageScore, 1, MidpointRounding.AwayFromZero);
 
             return roundedMedianPercentageScore;
+        }
+    }
+
+    internal class QuartileScores
+    {
+        internal double Quartile0Score { get; set; }
+        internal double Quartile1Score { get; set; }
+        internal double Quartile2Score { get; set; }
+        internal double Quartile3Score { get; set; }
+        internal double Quartile4Score { get; set; }
+
+        public QuartileScores()
+        {
+            // start at non-number, since starting at 0 means there was a result
+            Quartile0Score = double.NaN;
+            Quartile1Score = double.NaN;
+            Quartile2Score = double.NaN;
+            Quartile3Score = double.NaN;
+            Quartile4Score = double.NaN;
         }
     }
 }

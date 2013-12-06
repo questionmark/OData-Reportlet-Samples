@@ -136,6 +136,7 @@
           bar: {
             groupWidth: '95%'
           },
+          fontName: '"Arial"',
           hAxis: {
             slantedText: true,
             title: 'Score'

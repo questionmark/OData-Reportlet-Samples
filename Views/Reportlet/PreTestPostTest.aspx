@@ -89,7 +89,7 @@
     <div class="row-fluid">
     
       <div id="table_div" class="span12">
-        <table class="table-hover table-bordered">
+        <table class="table-hover table-bordered table-striped">
           <tr>
             <th>&nbsp;</th>
             <th>First Assessment</th>
@@ -119,6 +119,34 @@
             <td>Median Score:&nbsp;</td>
             <td id="MedianScoreOfFilteredResultsForFirstAssessment">-</td>
             <td id="MedianScoreOfFilteredResultsForSecondAssessment">-</td>
+          </tr>
+          <tr>
+            <td colspan="10">&nbsp;</td>
+          </tr>
+          <tr>
+            <td>Quartile 4 Score:&nbsp;</td>
+            <td id="Quartile4ScoreForFirstAssessment">-</td>
+            <td id="Quartile4ScoreForSecondAssessment">-</td>
+          </tr>
+          <tr>
+            <td>Quartile 3 Score:&nbsp;</td>
+            <td id="Quartile3ScoreForFirstAssessment">-</td>
+            <td id="Quartile3ScoreForSecondAssessment">-</td>
+          </tr>
+          <tr>
+            <td>Quartile 2 Score:&nbsp;</td>
+            <td id="Quartile2ScoreForFirstAssessment">-</td>
+            <td id="Quartile2ScoreForSecondAssessment">-</td>
+          </tr>
+          <tr>
+            <td>Quartile 1 Score:&nbsp;</td>
+            <td id="Quartile1ScoreForFirstAssessment">-</td>
+            <td id="Quartile1ScoreForSecondAssessment">-</td>
+          </tr>
+          <tr>
+            <td>Quartile 0 Score:&nbsp;</td>
+            <td id="Quartile0ScoreForFirstAssessment">-</td>
+            <td id="Quartile0ScoreForSecondAssessment">-</td>
           </tr>
         </table>
       </div>
@@ -192,11 +220,21 @@
             $('#MeanScoreOfFilteredResultsForFirstAssessment').text("-");
             $('#StandardDeviationOfFilteredResultsForFirstAssessment').text("-");
             $('#MedianScoreOfFilteredResultsForFirstAssessment').text("-");
+            $('#Quartile4ScoreForFirstAssessment').text("-");
+            $('#Quartile3ScoreForFirstAssessment').text("-");
+            $('#Quartile2ScoreForFirstAssessment').text("-");
+            $('#Quartile1ScoreForFirstAssessment').text("-");
+            $('#Quartile0ScoreForFirstAssessment').text("-");
             $('#CountOfFilteredResultsForSecondAssessment').text("-");
             $('#CountOfIgnoredResultsForSecondAssessment').text("-");
             $('#MeanScoreOfFilteredResultsForSecondAssessment').text("-");
             $('#StandardDeviationOfFilteredResultsForSecondAssessment').text("-");
             $('#MedianScoreOfFilteredResultsForSecondAssessment').text("-");
+            $('#Quartile4ScoreForSecondAssessment').text("-");
+            $('#Quartile3ScoreForSecondAssessment').text("-");
+            $('#Quartile2ScoreForSecondAssessment').text("-");
+            $('#Quartile1ScoreForSecondAssessment').text("-");
+            $('#Quartile0ScoreForSecondAssessment').text("-");
 
             ajaxCall = $.ajax({
               type: 'GET',
@@ -230,12 +268,14 @@
         dataTable.addColumn('number', '');
         dataTable.addColumn('number', '');
         dataTable.addColumn('number', '');
+        dataTable.addColumn({'type' : 'string', 'role' : 'tooltip', 'p' : { 'html': true } });
         dataTable.addRows(jsonData.chartData);
 
         var options = {
           bar: {
             groupWidth: '50%'
           },
+          fontName: '"Arial"',
           hAxis: {
             title: 'Assessments'
           },
@@ -250,6 +290,9 @@
             minValue: 0,
             maxValue: 100,
             title: 'Result Scores'
+          },
+          tooltip: {
+            isHtml: true
           }
         };
 
@@ -274,6 +317,21 @@
       if (jsonData.hasOwnProperty("medianScoreOfFilteredResultsForFirstAssessment")) {
         $('#MedianScoreOfFilteredResultsForFirstAssessment').text(jsonData.medianScoreOfFilteredResultsForFirstAssessment);
       }
+      if (jsonData.hasOwnProperty("quartile4ScoreForFirstAssessment")) {
+        $('#Quartile4ScoreForFirstAssessment').text(jsonData.quartile4ScoreForFirstAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile3ScoreForFirstAssessment")) {
+        $('#Quartile3ScoreForFirstAssessment').text(jsonData.quartile3ScoreForFirstAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile2ScoreForFirstAssessment")) {
+        $('#Quartile2ScoreForFirstAssessment').text(jsonData.quartile2ScoreForFirstAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile1ScoreForFirstAssessment")) {
+        $('#Quartile1ScoreForFirstAssessment').text(jsonData.quartile1ScoreForFirstAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile0ScoreForFirstAssessment")) {
+        $('#Quartile0ScoreForFirstAssessment').text(jsonData.quartile0ScoreForFirstAssessment);
+      }
       if (jsonData.hasOwnProperty("countOfFilteredResultsForSecondAssessment")) {
         $('#CountOfFilteredResultsForSecondAssessment').text(jsonData.countOfFilteredResultsForSecondAssessment);
       }
@@ -288,6 +346,21 @@
       }
       if (jsonData.hasOwnProperty("medianScoreOfFilteredResultsForSecondAssessment")) {
         $('#MedianScoreOfFilteredResultsForSecondAssessment').text(jsonData.medianScoreOfFilteredResultsForSecondAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile4ScoreForSecondAssessment")) {
+        $('#Quartile4ScoreForSecondAssessment').text(jsonData.quartile4ScoreForSecondAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile3ScoreForSecondAssessment")) {
+        $('#Quartile3ScoreForSecondAssessment').text(jsonData.quartile3ScoreForSecondAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile2ScoreForSecondAssessment")) {
+        $('#Quartile2ScoreForSecondAssessment').text(jsonData.quartile2ScoreForSecondAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile1ScoreForSecondAssessment")) {
+        $('#Quartile1ScoreForSecondAssessment').text(jsonData.quartile1ScoreForSecondAssessment);
+      }
+      if (jsonData.hasOwnProperty("quartile0ScoreForSecondAssessment")) {
+        $('#Quartile0ScoreForSecondAssessment').text(jsonData.quartile0ScoreForSecondAssessment);
       }
     }
   </script>

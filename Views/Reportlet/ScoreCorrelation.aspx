@@ -116,6 +116,7 @@
         dataTable.addRows(jsonData.chartData);
 
         var options = {
+          fontName: '"Arial"',
           hAxis: {
             minValue: 0,
             maxValue: 100,

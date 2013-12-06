@@ -153,6 +153,7 @@
           bar: {
             groupWidth: '95%'
           },
+          fontName: '"Arial"',
           hAxis: {
             slantedText: true,
             title: 'Attempt Number'
