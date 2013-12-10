@@ -13,6 +13,13 @@
       
       &nbsp;
 
+      <% if (ViewBag.FailedLogin != null && ViewBag.FailedLogin) { %>
+        <div class="alert alert-error" style="text-align: center;">
+          <%: Html.DisplayNameFor(m => m.TenantId) %>, <%: Html.DisplayNameFor(m => m.Username) %>, and/or <%: Html.DisplayNameFor(m => m.Password) %> are invalid<br />
+          Please try again
+        </div>
+      <% } %>
+
       <div class="control-group">
         <%: Html.BootstrapControlLabelFor(m => m.TenantId) %>
         <div class="controls">

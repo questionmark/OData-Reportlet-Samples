@@ -34,6 +34,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
             }
             else
             {
+                ViewBag.FailedLogin = true;
                 ViewBag.ReturnUrl = returnUrl;
                 result = View(accountModel);
             }
