@@ -32,8 +32,9 @@ namespace QM.Reporting.ODataDashboard.Web.Helpers
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null &&
-                    ex.InnerException.Message.ToLower().Contains("401 - unauthorized"))
+                if (ex.InnerException != null && (
+                    ex.InnerException.Message.ToLower().Contains("401 - unauthorized") || 
+                    ex.InnerException.Message.ToLower().Contains("401 unauthorized")))
                 {
                     // login wasn't successful so swallow exception and prompt user again
                 }
