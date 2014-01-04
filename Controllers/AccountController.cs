@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using System.Web.Security;
 using QM.Reporting.ODataDashboard.Web.Helpers;
 using QM.Reporting.ODataDashboard.Web.Models;
 
@@ -10,7 +11,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
         // GET: /Account/Login
         //
         [AcceptVerbs(HttpVerbs.Get)]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl = "/")
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -40,6 +41,16 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
             }
 
             return result;
+        }
+
+        // 
+        // GET: /Account/Logout
+        // 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult Logout(string returnUrl)
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", new { returnUrl });
         }
     }
 }

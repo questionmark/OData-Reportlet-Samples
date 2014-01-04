@@ -2,11 +2,21 @@
 <%@ Import Namespace="QM.Reporting.ODataDashboard.Web.Enums" %>
 
 <asp:Content ID="HeadContent" ContentPlaceHolderID="HeadPlaceHolder" runat="server">
+  <style type="text/css">
+    #chart_div table {
+      width: auto;
+      margin: 0 auto !important;
+    }
+  </style>
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="BodyPlaceHolder" runat="server">
   
   <div class="row-fluid">
+
+    <div class="text-right" style="padding-left: 20px; padding-right: 20px;">
+      <%: Html.ActionLink("Log Out", "Logout", "Account", new { returnUrl = "/Reportlet/PreTestPostTest" }, null) %>
+    </div>
   
     <div class="span12">
     

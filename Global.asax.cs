@@ -32,6 +32,15 @@ namespace QM.Reporting.ODataDashboard.Web
                 );
         }
 
+        protected void Application_BeginRequest()
+        {
+            // These three lines ensure the back button does not
+            // allow the user to see pages after logging out
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
+            Response.Cache.SetNoStore();
+        }
+
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)
         {
             HttpContext.Current.Response.Headers.Remove("X-Frame-Options");
