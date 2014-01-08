@@ -17,10 +17,19 @@ namespace QM.Reporting.ODataDashboard.Web.Models
 
         public IEnumerable<SelectListItem> AssessmentItems { get; private set; }
 
-        public AttemptDistributionModel(IEnumerable<Assessment> orderedAssessments)
+        [DisplayName("Area")]
+        public string TenantId { get; set; }
+
+        [DisplayName("Username")]
+        public string Username { get; set; }
+
+        public AttemptDistributionModel(IEnumerable<Assessment> orderedAssessments, AccountModel accountModel)
         {
             SetAssessmentItems(orderedAssessments);
             ScorebandNameForPass = "Pass"; // default value
+
+            TenantId = accountModel.TenantId;
+            Username = accountModel.Username;
         }
 
         private void SetAssessmentItems(IEnumerable<Assessment> orderedAssessments)

@@ -24,7 +24,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
 
             var assessments = AssessmentsDAL.GetAssessments(accountModel);
 
-            var attemptDistributionModel = new AttemptDistributionModel(assessments);
+            var attemptDistributionModel = new AttemptDistributionModel(assessments, accountModel);
 
             return View(attemptDistributionModel);
         }
@@ -237,7 +237,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
 
             var assessments = AssessmentsDAL.GetAssessments(accountModel);
 
-            var preTestPostTestModel = new PreTestPostTestModel(assessments);
+            var preTestPostTestModel = new PreTestPostTestModel(assessments, accountModel);
 
             return View(preTestPostTestModel);
         }
@@ -561,7 +561,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
 
             var assessments = AssessmentsDAL.GetAssessments(accountModel);
 
-            var scoreCorrelationModel = new ScoreCorrelationModel(assessments);
+            var scoreCorrelationModel = new ScoreCorrelationModel(assessments, accountModel);
 
             return View(scoreCorrelationModel);
         }
@@ -637,7 +637,7 @@ namespace QM.Reporting.ODataDashboard.Web.Controllers
 
             var assessments = AssessmentsDAL.GetAssessments(accountModel);
 
-            var scoreDistributionModel = new ScoreDistributionModel(assessments);
+            var scoreDistributionModel = new ScoreDistributionModel(assessments, accountModel);
 
             return View(scoreDistributionModel);
         }

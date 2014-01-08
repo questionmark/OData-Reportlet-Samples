@@ -14,9 +14,18 @@ namespace QM.Reporting.ODataDashboard.Web.Models
 
         public IEnumerable<SelectListItem> AssessmentItems { get; private set; }
 
-        public ScoreDistributionModel(IEnumerable<Assessment> orderedAssessments)
+        [DisplayName("Area")]
+        public string TenantId { get; set; }
+
+        [DisplayName("Username")]
+        public string Username { get; set; }
+
+        public ScoreDistributionModel(IEnumerable<Assessment> orderedAssessments, AccountModel accountModel)
         {
             SetAssessmentItems(orderedAssessments);
+
+            TenantId = accountModel.TenantId;
+            Username = accountModel.Username;
         }
 
         private void SetAssessmentItems(IEnumerable<Assessment> orderedAssessments)

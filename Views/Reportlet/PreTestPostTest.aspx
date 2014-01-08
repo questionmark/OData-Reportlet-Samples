@@ -7,6 +7,9 @@
       width: auto;
       margin: 0 auto !important;
     }
+    .greytext {
+      color: darkgrey;
+    }
   </style>
 </asp:Content>
 
@@ -15,7 +18,9 @@
   <div class="row-fluid">
 
     <div class="text-right" style="padding-left: 20px; padding-right: 20px;">
-      <%: Html.ActionLink("Log Out", "Logout", "Account", new { returnUrl = "/Reportlet/PreTestPostTest" }, null) %>
+      <span class="greytext"><%: Html.DisplayNameFor(m => m.TenantId) %>:</span> <%: Model.TenantId %><br/>
+      <span class="greytext"><%: Html.DisplayNameFor(m => m.Username) %>:</span> <%: Model.Username %><br/>
+      <b><%: Html.ActionLink("Log Out", "Logout", "Account", new { returnUrl = "/Reportlet/PreTestPostTest" }, null) %></b>
     </div>
   
     <div class="span12">

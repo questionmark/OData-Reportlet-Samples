@@ -30,13 +30,22 @@ namespace QM.Reporting.ODataDashboard.Web.Models
 
         public IEnumerable<SelectListItem> AssessmentItems { get; private set; }
 
-        public PreTestPostTestModel(IEnumerable<Assessment> orderedAssessments)
+        [DisplayName("Area")]
+        public string TenantId { get; set; }
+
+        [DisplayName("Username")]
+        public string Username { get; set; }
+
+        public PreTestPostTestModel(IEnumerable<Assessment> orderedAssessments, AccountModel accountModel)
         {
             SetAssessmentItems(orderedAssessments);
             FirstAssessmentAttemptToUse = Attempt.First; // default value
             FirstAssessmentAttemptNumber = 1; // default value
             SecondAssessmentAttemptToUse = Attempt.First; // default value
             SecondAssessmentAttemptNumber = 1; // default value
+
+            TenantId = accountModel.TenantId;
+            Username = accountModel.Username;
         }
 
         private void SetAssessmentItems(IEnumerable<Assessment> orderedAssessments)
